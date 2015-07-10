@@ -3,9 +3,7 @@ LICENSE
 
 LICENSE TERMS
 
-Copyright (c)2003-2011 Wei Huang, Karthik Sankaranarayanan, Sivakumar Velusamy,
-David Tarjan, Shougata Ghosh, John Burr, Runjie Zhang, Robert J. Ribando, 
-Mircea R. Stan, and Kevin Skadron. All rights reserved.
+Copyright (c)2003-2014. All rights reserved.
 
 Permission is hereby granted, without written agreement and without license or
 royalty fees, to use, copy, modify, and distribute this software and its
@@ -41,8 +39,8 @@ relevant among the following papers:
    In Proceedings of the 41st Design Automation Conference, June 2004.
 
 3) K. Sankaranarayanan, S. Velusamy, M. R. Stan and K. Skadron, "A Case 
-   for Thermal-Aware Floorplanning at the Microarchitectural Level." To
-   appear in the Journal of Instruction-Level Parallelism, June 2005.
+   for Thermal-Aware Floorplanning at the Microarchitectural Level." 
+   In the Journal of Instruction-Level Parallelism, June 2005.
 
 4) W. Huang, K. Sankaranarayanan, R. J. Ribando, M. R. Stan and K. Skadron.
    "An Improved Block-Based Thermal Model in HotSpot 4.0 with Granularity 
@@ -50,3 +48,12 @@ relevant among the following papers:
    Deconstructing, and Debunking, in conjunction with the 34th International 
    Symposium on Computer Architecture (ISCA), June 2007.
 
+5) W. Huang, K. Sankaranarayanan, K. Skadron, R. J. Ribando and M. R. Stan.
+   "Accurate Pre-RTL Temperature-Aware Design Using a Parameterized, Geometric
+   Thermal Model" In IEEE Transactions on Computers, Vol.57, No.8, August 2008.
+
+6) W. Huang, K. Skadron, S. Gurumurthi, R. J. Ribando and M. R. Stan.
+   "Differentiating the Roles of IR Measurement and Simulation of Power and 
+   Temperature-Aware Design" In Proceedings of the 2009 IEEE International 
+   Symposium on Performance Analysis of Systems and Software (ISPASS).
+   April. 2009

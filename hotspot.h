@@ -16,6 +16,11 @@ typedef struct global_config_t_st
 	char config[STR_SIZE];
 	/* output configuration parameters to file	*/
 	char dump_config[STR_SIZE];
+
+	
+	/*BU_3D: Option to turn on heterogenous R-C assignment*/
+	char detailed_3D[STR_SIZE];
+	
 }global_config_t;
 
 /* 

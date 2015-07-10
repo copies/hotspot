@@ -1,6 +1,6 @@
 
 # Floorplan close to the Alpha EV6 processor
-# Line Format: <unit-name>\t<width>\t<height>\t<left-x>\t<bottom-y>
+# Line Format: <unit-name>\t<width>\t<height>\t<left-x>\t<bottom-y>\t[<specific-heat>]\t[<resistivity>]
 # all dimensions are in meters
 # comment lines begin with a '#'
 # comments and empty lines are ignored

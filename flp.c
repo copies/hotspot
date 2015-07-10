@@ -559,10 +559,11 @@ flp_t *flp_create_grid(flp_t *flp, int ***map)
 					/* map between position in 'flp' to that in 'grid'	*/
 					ptr[i][++ptr[i][0]] = count;
 					grid_num++;
-					count++;
-				}
-			}
-	}
+          count++;
+        }
+      }
+  }
+
 
 	/* sanity check	*/
 	if(count != (xsize-1) * (ysize-1))
@@ -1011,6 +1012,7 @@ int flp_count_units(FILE *fp)
     char str1[LINE_SIZE], str2[LINE_SIZE];
 	char name[STR_SIZE];
 	double leftx, bottomy, width, height;
+	double cp, res;
 	char *ptr;
     int count = 0;
 
@@ -1027,8 +1029,8 @@ int flp_count_units(FILE *fp)
 			continue;
 
 		/* functional block placement information	*/
-		if (sscanf(str2, "%s%lf%lf%lf%lf", name, &leftx, &bottomy,
-		  		   &width, &height) == 5)
+		if (sscanf(str2, "%s%lf%lf%lf%lf%lf%lf", name, &leftx, &bottomy,		
+		  		   &width, &height, &cp, &res) > 4)
 			count++;
 	}
 	return count;
@@ -1061,7 +1063,7 @@ void flp_populate_blks(flp_t *flp, FILE *fp)
 	int i=0;
 	char str[LINE_SIZE], copy[LINE_SIZE]; 
 	char name1[STR_SIZE], name2[STR_SIZE];
-	double width, height, leftx, bottomy;
+	double width, height, leftx, bottomy, cp, res, temp;
 	double wire_density;
 	char *ptr;
 
@@ -1076,18 +1078,42 @@ void flp_populate_blks(flp_t *flp, FILE *fp)
 		ptr = strtok(str, " \r\t\n");
 		if (!ptr || ptr[0] == '#')
 			continue;
-
-		if (sscanf(copy, "%s%lf%lf%lf%lf", name1, &width, &height, 
-				   &leftx, &bottomy) == 5) {
-			strcpy(flp->units[i].name, name1);
-			flp->units[i].width = width;
-			flp->units[i].height = height;
-			flp->units[i].leftx = leftx;
-			flp->units[i].bottomy = bottomy;
-			i++;
-			/* skip connectivity info	*/
-		} else if (sscanf(copy, "%s%s%lf", name1, name2, &wire_density) != 3) 
-			fatal("invalid floorplan file format\n");
+		cp = res = 0.0;
+		if (sscanf(copy, "%s%lf%lf%lf%lf%lf%lf%lf", name1, &width, &height,
+					   &leftx, &bottomy, &cp, &res, &temp) > 7)
+			fatal("invalid floorplan file format\n"); 
+    else if (sscanf(copy, "%s%lf%lf%lf%lf%lf%lf", name1, &width, &height,
+					   &leftx, &bottomy, &cp, &res) == 7)
+		{
+				strcpy(flp->units[i].name, name1);
+				flp->units[i].width = width;
+				flp->units[i].height = height;
+				flp->units[i].leftx = leftx;
+				flp->units[i].bottomy = bottomy;
+				flp->units[i].specificheat = cp; //BU_3D set specific heat
+				flp->units[i].resistivity = res; //BU_3D set resistivity
+				flp->units[i].hasRes = TRUE;
+				flp->units[i].hasSh = TRUE;
+				i++; 
+		} 
+		/* Default Option */
+		else if(sscanf(copy, "%s%lf%lf%lf%lf%lf%lf", name1, &width, &height,
+					   &leftx, &bottomy, &cp, &res) == 5)
+		{
+				strcpy(flp->units[i].name, name1);
+				flp->units[i].width = width;
+				flp->units[i].height = height;
+				flp->units[i].leftx = leftx;
+				flp->units[i].bottomy = bottomy;
+				flp->units[i].specificheat = 0.0;	//BU_3D else - set specific heat to default value 0.0
+				flp->units[i].resistivity = 0.0; 	//BU_3D set resistivity to default value 0.0
+				flp->units[i].hasRes = FALSE; 		//BU_3D set boolean for has resistivity flag to false
+				flp->units[i].hasSh = FALSE; 		//BU_3D set boolean for has specific heat flag to false
+				i++; 
+		}
+		/* skip connectivity info	*/
+		else if(sscanf(copy, "%s%s%lf", name1, name2, &wire_density) != 3)
+			fatal("invalid floorplan file format\n"); 
 	}
 	if (i != flp->n_units)
 	  fatal("mismatch of number of units\n");

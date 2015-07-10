@@ -182,7 +182,7 @@ int main(int argc, char **argv)
 	 */
 	flp = flp_placeholder(flp_desc);
 	/* temperature model	*/
-	model = alloc_RC_model(&thermal_config, flp);
+	model = alloc_RC_model(&thermal_config, flp, 0);
 	/* input power vector	*/
 	power = hotspot_vector(model);
 	read_power(model, power, global_config.power_in);

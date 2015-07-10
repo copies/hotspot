@@ -212,6 +212,8 @@ typedef struct thermal_config_t_st
 	char grid_steady_file[STR_SIZE];
 	/* mapping mode between grid and block models	*/
 	char grid_map_mode[STR_SIZE];
+	
+	int detailed_3D_used; //BU_3D: Added parameter to check for heterogenous R-C model 
 }thermal_config_t;
 
 /* defaults	*/
@@ -352,7 +354,7 @@ typedef struct RC_model_t_st
 
 /* constructor/destructor	*/
 /* placeholder is an empty floorplan frame with only the names of the functional units	*/
-RC_model_t *alloc_RC_model(thermal_config_t *config, flp_t *placeholder);
+RC_model_t *alloc_RC_model(thermal_config_t *config, flp_t *placeholder, int do_detailed_3D);
 void delete_RC_model(RC_model_t *model);
 
 /* initialization	*/
